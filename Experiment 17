@@ -1,0 +1,16 @@
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+import tensorflow as tf
+
+(Xtr, ytr), (Xte, yte) = tf.keras.datasets.mnist.load_data()
+Xtr, Xte = Xtr[...,None]/255.0, Xte[...,None]/255.0
+ytr, yte = (ytr<5).astype(int), (yte<5).astype(int)
+
+model = Sequential([
+    Conv2D(16,(3,3),activation='relu',input_shape=(28,28,1)),
+    MaxPooling2D(), Flatten(),
+    Dense(2,activation='softmax')
+])
+model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+model.fit(Xtr,ytr,epochs=3,verbose=0)
+print("Accuracy:", model.evaluate(Xte,yte,verbose=0)[1])

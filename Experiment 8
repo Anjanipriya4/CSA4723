@@ -1,0 +1,11 @@
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+X, y = make_moons(200, noise=0.2)
+Xtr, Xte, ytr, yte = train_test_split(X, y)
+m = Sequential([Dense(8, activation='tanh', input_shape=(2,)), Dense(1, activation='sigmoid')])
+m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
+m.fit(Xtr, ytr, epochs=50, verbose=0)
+print("Accuracy:", m.evaluate(Xte, yte, verbose=0)[1])

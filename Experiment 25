@@ -1,0 +1,6 @@
+acts = ['relu','sigmoid','tanh']
+for act in acts:
+    model = Sequential([Dense(8,activation=act,input_dim=2),Dense(1,activation='sigmoid')])
+    model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
+    model.fit(X,y,epochs=50,verbose=0)
+    print(act, model.evaluate(X,y,verbose=0)[1])

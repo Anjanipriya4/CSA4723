@@ -1,0 +1,10 @@
+import numpy as np, matplotlib.pyplot as plt
+X = 2*np.random.rand(100,1)
+y = 4*X + 3 + np.random.randn(100,1)
+Xb = np.c_[np.ones((100,1)), X]
+theta = np.zeros((2,1))
+lr, iters = 0.1, 100
+for i in range(iters):
+    grad = 2/len(Xb)*Xb.T@(Xb@theta - y)
+    theta -= lr*grad
+print("Theta:", theta.ravel())

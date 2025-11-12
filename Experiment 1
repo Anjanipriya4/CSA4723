@@ -1,0 +1,21 @@
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+X, y = load_iris(return_X_y=True)
+# Binary (Setosa vs rest)
+y_bin = (y == 0).astype(int)
+Xtr, Xte, ytr, yte = train_test_split(X, y_bin, test_size=0.3)
+m = LogisticRegression().fit(Xtr, ytr)
+ConfusionMatrixDisplay(confusion_matrix(yte, m.predict(Xte))).plot()
+plt.title("Binary Confusion Matrix")
+plt.show()
+
+# Multiclass
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3)
+m2 = LogisticRegression(max_iter=200).fit(Xtr, ytr)
+ConfusionMatrixDisplay(confusion_matrix(yte, m2.predict(Xte))).plot()
+plt.title("Multiclass Confusion Matrix")
+plt.show()

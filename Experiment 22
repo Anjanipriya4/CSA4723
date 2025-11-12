@@ -1,0 +1,8 @@
+from sklearn.datasets import load_iris
+from tensorflow.keras.utils import to_categorical
+X, y = load_iris(return_X_y=True)
+y = to_categorical(y)
+model = Sequential([Dense(10,activation='relu',input_dim=4),Dense(3,activation='softmax')])
+model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
+model.fit(X,y,epochs=100,verbose=0)
+print(model.evaluate(X,y,verbose=0))

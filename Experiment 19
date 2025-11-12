@@ -1,0 +1,13 @@
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate
+
+inp = Input((128,128,1))
+c1 = Conv2D(16,3,activation='relu',padding='same')(inp)
+p1 = MaxPooling2D()(c1)
+c2 = Conv2D(32,3,activation='relu',padding='same')(p1)
+u1 = UpSampling2D()(c2)
+merge = concatenate([u1,c1])
+out = Conv2D(1,1,activation='sigmoid')(merge)
+model = Model(inp,out)
+model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
+model.summary()

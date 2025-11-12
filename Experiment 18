@@ -1,0 +1,9 @@
+from tensorflow.keras.optimizers import Adam, RMSprop
+for opt in [Adam(0.001), RMSprop(0.0005)]:
+    model = Sequential([
+        Conv2D(8,(3,3),activation='tanh',input_shape=(28,28,1)),
+        MaxPooling2D(), Flatten(), Dense(2,activation='softmax')
+    ])
+    model.compile(optimizer=opt,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+    model.fit(Xtr,ytr,batch_size=32,epochs=2,verbose=0)
+    print(opt._name_, model.evaluate(Xte,yte,verbose=0)[1])
